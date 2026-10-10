@@ -1,0 +1,1 @@
+This file preserves package subdirectories used by relative template paths.

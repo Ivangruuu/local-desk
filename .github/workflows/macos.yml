@@ -1,0 +1,27 @@
+name: Build macOS Apple Silicon
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+      - name: Build standalone application
+        env:
+          LOCAL_DESK_CPU_TEST: '1'
+        run: ./scripts/build_macos.sh
+      - name: Test document readers and model storage
+        run: PYTHONPATH=src .build-venv/bin/python -m unittest discover -s tests -v
+      - name: Archive app
+        run: ditto -c -k --sequesterRsrc --keepParent "$HOME/Library/Caches/LocalDeskBuild/dist/Local Desk.app" "$HOME/Library/Caches/LocalDeskBuild/dist/Local-Desk-macOS-arm64.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Local-Desk-macOS-arm64
+          path: ~/Library/Caches/LocalDeskBuild/dist/Local-Desk-macOS-arm64.zip
