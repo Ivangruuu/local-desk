@@ -27,13 +27,14 @@ def main():
                     target.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copyfile(source, target)
     (licenses / 'INDEX.txt').write_text('\n'.join(sorted(listing)), encoding='utf-8')
+    shutil.copytree(ROOT / 'assets/licenses', licenses / 'Additional', dirs_exist_ok=True)
     shutil.copyfile(ROOT / 'LICENSE', licenses / 'Local-Desk-AGPL-3.0.txt')
     source = ROOT / 'build/source'
     source.mkdir(parents=True, exist_ok=True)
     for folder in ('src', 'scripts', 'tests', 'assets'):
         shutil.copytree(ROOT / folder, source / folder, dirs_exist_ok=True,
                         ignore=shutil.ignore_patterns('__pycache__', '*.pyc', 'ocr'))
-    for name in ('README.md', 'LICENSE', 'requirements.txt', 'requirements-lock.txt', 'LocalDesk.spec'):
+    for name in ('README.md', 'LICENSE', 'THIRD_PARTY.md', 'requirements.txt', 'requirements-lock.txt', 'LocalDesk.spec'):
         if (ROOT / name).exists():
             shutil.copyfile(ROOT / name, source / name)
     # Qt skips UF_HIDDEN files. A recursively hidden build folder must not hide
