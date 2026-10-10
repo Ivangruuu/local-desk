@@ -6,4 +6,4 @@ The application code is AGPL-3.0-only. It uses PyMuPDF (AGPL-3.0), PySide6/Qt (L
 
 Model weights are not redistributed with the app. Each catalog entry links to its upstream model card and license. Gemma's terms are separate from this project's AGPL license.
 
-This project is not affiliated with Apple, OpenAI, Alibaba/Qwen, Google or Hugging Face.
+This project is not affiliated with Apple, Alibaba/Qwen, Google or Hugging Face.
